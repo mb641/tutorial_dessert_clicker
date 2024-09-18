@@ -25,11 +25,11 @@ class DessertViewModel: ViewModel() {
                 val dessertsSold = currentState.dessertsSold+1
                 val nextIdNumber = determineIndex(dessertsSold)
                 currentState.copy(
-                    revenue = 0,
-                    dessertsSold = 0,
-                    currentDessertIndex = 0,
-                    currentDessertPrice = 0,
-                    currentDessertImageId = 0,
+                    revenue = currentState.revenue + currentState.currentDessertPrice,
+                    dessertsSold = dessertsSold,
+                    currentDessertIndex = nextIdNumber,
+                    currentDessertPrice = dessertList[nextIdNumber].price,
+                    currentDessertImageId = dessertList[nextIdNumber].imageId,
 
                 )
 
@@ -47,7 +47,7 @@ class DessertViewModel: ViewModel() {
 
         }
 
-    private fun determineIndex(dessertsSold: Int): Any {
+    private fun determineIndex(dessertsSold: Int): Int {
         var dessertIndex = 0
         for (index in dessertList.indices) {
             if (dessertsSold >= dessertList[index].startProductionAmount) {
